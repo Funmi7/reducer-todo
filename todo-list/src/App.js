@@ -16,6 +16,7 @@ const initialState =  {todos, input: ''};
 const ON_ADD_TODO = 'ON_ADD_TODO';
 const ON_INPUT_CHANGE = 'ON_INPUT_CHANGE';
 const ON_TASK_COMPLETE = 'ON_TASK_COMPLETE';
+const ON_CLEAR_COMPLETED = 'ON_CLEAR_COMPLETED';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -40,12 +41,12 @@ function reducer(state, action) {
           return todo;
       }
       )}
-    //   return state.todos.map(todo => {
-    //     if (todo.id === action.payload) {
-    //         return {...todo, completed: !todo.completed};
-    //     }
-    //     return todo
-    // });
+
+    case ON_CLEAR_COMPLETED: 
+      return {
+        ...state, todos: state.todos.filter(todo => todo.completed === false)
+      }
+
     default:
        return state;
   }
@@ -81,6 +82,15 @@ function App() {
       payload: todo
     })
   }
+
+  const clearCompleted = event => {
+    event.preventDefault();
+    dispatch({
+      type: ON_CLEAR_COMPLETED
+    })
+    
+
+  }
   return (
     <div className="App">
       {/* {state.item} */}
@@ -91,7 +101,7 @@ function App() {
                   item={state.input}
                   onInputChange={onInputChange}
                   onAddTodo={onAddTodo}
-                  // onClearCompleted={this.onClearCompleted}
+                  clearCompleted={clearCompleted}
                   />
     </div>
   );
