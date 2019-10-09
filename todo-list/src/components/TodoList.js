@@ -3,17 +3,15 @@ import Todo from './Todo';
 
 
 function TodoList(props){
-        const {todoList} = props;
+        const {todoList, onTaskComplete} = props;
         return (
-            <div>{
             todoList.map((todo) =>(
              <Todo 
-            //  onTaskComplete={onTaskComplete}
+            onTaskComplete={onTaskComplete}
              key={todo.id}
              todo={todo}
              />
-        ))}
-        </div>
+        ))
         )
 }
 export default TodoList;

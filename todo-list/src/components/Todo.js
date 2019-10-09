@@ -1,13 +1,13 @@
 import React from 'react';
-// import './Todo.css';
+import './Todo.css';
 
 
 function Todo(props){
-    const {todo} =props;
+    const {todo, onTaskComplete} = props;
     return(
         <div
-        // className={`${this.props.todo.completed? 'finished-task': null}`}
-        // onClick={() => onTaskComplete(this.props.todo.id)}
+        className={`${todo.completed? 'finished-task': null}`}
+        onClick={() => onTaskComplete(todo.id)}
         >
         {todo.item}
         </div>
