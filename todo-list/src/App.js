@@ -3,61 +3,17 @@ import logo from './logo.svg';
 import './App.css';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
-
-const todos = [{
-  item: 'Learn about reducers',
-  completed: false,
-  id: 3892987589
-}];
-
-const initialState =  {todos, input: ''};
+import reducer from './reducers/reducer';
+import * as actionTypes from './reducers/reducer';
 
 
-const ON_ADD_TODO = 'ON_ADD_TODO';
-const ON_INPUT_CHANGE = 'ON_INPUT_CHANGE';
-const ON_TASK_COMPLETE = 'ON_TASK_COMPLETE';
-const ON_CLEAR_COMPLETED = 'ON_CLEAR_COMPLETED';
-
-function reducer(state, action) {
-  switch (action.type) {
-    case ON_INPUT_CHANGE:
-      return {
-        ...state, input: action.payload
-      };
-
-    case ON_ADD_TODO :
-      return {
-        ...state, todos: [...state.todos, action.payload], input: ''
-      };
-
-    case ON_TASK_COMPLETE :
-      console.log(state.todos)
-      return  {
-       ...state, todos: state.todos.map(todo => {
-        if (todo.id === action.payload){
-          todo.completed = !todo.completed;
-          return todo;
-        }
-          return todo;
-      }
-      )}
-
-    case ON_CLEAR_COMPLETED: 
-      return {
-        ...state, todos: state.todos.filter(todo => todo.completed === false)
-      }
-
-    default:
-       return state;
-  }
-}
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, actionTypes.initialState);
   
   const onInputChange = event => {
     dispatch({
-      type: ON_INPUT_CHANGE,
+      type: actionTypes.ON_INPUT_CHANGE,
       payload:  event.target.value
     });
   }
@@ -71,14 +27,14 @@ function App() {
       id: Date.now()
     } 
     dispatch({
-      type: ON_ADD_TODO,
+      type: actionTypes.ON_ADD_TODO,
       payload: newTodo
     })
   }
 
   const onTaskComplete = todo => {
     dispatch({
-      type: ON_TASK_COMPLETE,
+      type: actionTypes.ON_TASK_COMPLETE,
       payload: todo
     })
   }
@@ -86,7 +42,7 @@ function App() {
   const clearCompleted = event => {
     event.preventDefault();
     dispatch({
-      type: ON_CLEAR_COMPLETED
+      type: actionTypes.ON_CLEAR_COMPLETED
     })
     
 
